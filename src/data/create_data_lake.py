@@ -1,3 +1,5 @@
+import os
+import esquema_data_lake
 def create_data_lake():
     """Cree el data lake con sus capas.
 
@@ -21,7 +23,12 @@ def create_data_lake():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
+    for path_carpeta in esquema_data_lake.get_esquema():
+        try:
+            if not os.path.exists(path_carpeta):
+                os.mkdir(path_carpeta)
+        except :
+            raise Exception("no se pudo crear la carpeta")
 
 
 if __name__ == "__main__":
