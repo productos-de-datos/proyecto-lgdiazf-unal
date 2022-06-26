@@ -31,13 +31,13 @@ def transform_data():
             df_energia = pd.read_excel(path_landing + file,engine='openpyxl')
         except :
             df_energia = pd.read_excel(path_landing + file )
-        df_energia_filtrado = df_energia.dropna(thresh=24)
+        df_energia_filtrado = df_energia.dropna(thresh=24)       
         if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
             df_energia_filtrado.to_csv(path_raw + nombre + '.csv',index=False,header=False)
         else :
             df_energia_filtrado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
-      
-        
+
+
 
     #raise NotImplementedError("Implementar esta función")
 
