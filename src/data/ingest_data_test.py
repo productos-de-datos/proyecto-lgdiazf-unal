@@ -3,6 +3,7 @@ import os
 import esquema_data as esquema
 import pandas as pd
 
+cwd=os.getcwd()
 
 
 
@@ -16,7 +17,9 @@ class TestIngrestData:
     def test_cargar_pandas(self):
         #ingest_data.ingest_data()
         try:
-            pd.read_excel(esquema.get_esquema()[0])
+            path = os.path.join(cwd, esquema.get_esquema()[0])
+            df = pd.read_excel(path,engine='openpyxl')
+            print(df)
         except:
             assert False
 
