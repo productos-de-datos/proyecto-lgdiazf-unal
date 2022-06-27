@@ -12,7 +12,11 @@ path_raw = os.path.join(cwd, 'data_lake/raw/')
 list_files = os.listdir(path_landing)
 
 
-
+def set_columnas(col):
+    try :
+        return str(int(col))
+    except:
+        return str(col)
 
 
 def transform_data():
@@ -31,13 +35,16 @@ def transform_data():
             df_energia = pd.read_excel(path_landing + file,engine='openpyxl')
         except :
             df_energia = pd.read_excel(path_landing + file )
-        df_energia_filtrado = df_energia.dropna(thresh=24)
+        df_energia_filtrado = df_energia.dropna(thresh=23)
 
         if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
             df_arreglo = df_energia_filtrado.copy()
-            header = df_arreglo.iloc[0]  
+            header = df_arreglo.iloc[0].apply(set_columnas)
             df_energia_filtrado = df_arreglo.rename(columns = header)
             df_energia_filtrado = df_energia_filtrado.iloc[1: , :]
+
+        esquema = ["Fecha"] + [str(int(hora)) for hora in range(24)]
+        df_energia_filtrado = df_energia_filtrado[esquema]
 
         df_energia_filtrado.index = df_energia_filtrado[list(df_energia_filtrado.columns.values)[0]]
 
@@ -45,7 +52,7 @@ def transform_data():
 
         df_transformado = transformar_df(df_energia_filtrado)
 
-
+        
         df_transformado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
         
 
@@ -84,11 +91,16 @@ def transformar_df(df):
     df_completo['hora'] = df_completo.index
     df_completo = df_completo[['fecha','hora','valor']]
 
+    df_completo['hora'] = df_completo.apply(lambda row : set_hora(row['hora']),axis=1)
+
     return df_completo
 
-
+def set_hora(hora):
+    if int(hora) < 10:
+        return "H0" + str(int(hora)) 
+    else:
+        return "H" + str(int(hora))
 
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
