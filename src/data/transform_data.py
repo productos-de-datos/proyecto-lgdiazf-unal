@@ -12,7 +12,11 @@ path_raw = os.path.join(cwd, 'data_lake/raw/')
 list_files = os.listdir(path_landing)
 
 
-
+def set_columnas(col):
+    try :
+        return str(int(col))
+    except:
+        return str(col)
 
 
 def transform_data():
@@ -31,18 +35,72 @@ def transform_data():
             df_energia = pd.read_excel(path_landing + file,engine='openpyxl')
         except :
             df_energia = pd.read_excel(path_landing + file )
-        df_energia_filtrado = df_energia.dropna(thresh=24)
+        df_energia_filtrado = df_energia.dropna(thresh=23)
+
         if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
-            df_energia_filtrado.to_csv(path_raw + nombre + '.csv',index=False,header=False)
-        else :
-            df_energia_filtrado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
+            df_arreglo = df_energia_filtrado.copy()
+            header = df_arreglo.iloc[0].apply(set_columnas)
+            df_energia_filtrado = df_arreglo.rename(columns = header)
+            df_energia_filtrado = df_energia_filtrado.iloc[1: , :]
+
+        esquema = ["Fecha"] + [str(int(hora)) for hora in range(24)]
+        df_energia_filtrado = df_energia_filtrado[esquema]
+
+        df_energia_filtrado.index = df_energia_filtrado[list(df_energia_filtrado.columns.values)[0]]
+
+        df_energia_filtrado = df_energia_filtrado.drop_duplicates( subset = list(df_energia_filtrado.columns.values)[0], keep='first',inplace=False)
+
+        df_transformado = transformar_df(df_energia_filtrado)
+
+        
+        df_transformado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
+        
+
+
+
+        
+        # if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
+        #     df_energia_filtrado.to_csv(path_raw + nombre + '.csv',index=False,header=False)
+        # else :
+        #     df_energia_filtrado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
       
         
 
     #raise NotImplementedError("Implementar esta función")
 
 
+def transformar_df(df):
+    df_inicial = df.copy()
+   
+    df_transpuesta = df_inicial.T
+    df_transpuesta = df_transpuesta.iloc[1:,:]
+    arreglo_fechas = list(df_transpuesta.columns)
+
+    arreglo_df = []
+
+    for fecha in arreglo_fechas:
+
+        serie_fecha = { "valor" : df_transpuesta[fecha] }
+
+        df_fecha = pd.DataFrame(serie_fecha)
+        df_fecha["fecha"] = fecha
+
+        arreglo_df.append(df_fecha)
+
+    df_completo = pd.concat(arreglo_df,sort=False)
+    df_completo['hora'] = df_completo.index
+    df_completo = df_completo[['fecha','hora','valor']]
+
+    df_completo['hora'] = df_completo.apply(lambda row : set_hora(row['hora']),axis=1)
+
+    return df_completo
+
+def set_hora(hora):
+    if int(hora) < 10:
+        return "H0" + str(int(hora)) 
+    else:
+        return "H" + str(int(hora))
+
 if __name__ == "__main__":
     import doctest
-
     doctest.testmod()
