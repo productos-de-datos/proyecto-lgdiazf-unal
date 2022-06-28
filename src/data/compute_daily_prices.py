@@ -1,3 +1,11 @@
+import pandas as pd
+import os
+
+cwd=os.getcwd()
+
+path_datos = os.path.join(cwd, 'data_lake/cleansed/precios-horarios.csv')
+path_datos_computados = os.path.join(cwd, 'data_lake/business/precios-diarios.csv')
+
 def compute_daily_prices():
     """Compute los precios promedios diarios.
 
@@ -12,10 +20,37 @@ def compute_daily_prices():
 
 
     """
-    raise NotImplementedError("Implementar esta función")
+    df_datos = pd.read_csv(path_datos)
+    df_promedio_diario = get_datos(df_datos) 
+
+    df_promedio_diario.to_csv(path_datos_computados ,index=False,header=True)
+
+
+    
+
+
+   # raise NotImplementedError("Implementar esta función")
+
+
+def get_datos(df_datos):
+
+    dic_datos = {"fecha" : [] , "precio" : []}
+
+    grupo_df_diarios = df_datos.groupby("fecha")
+
+    for titulo,df_diario in grupo_df_diarios:
+
+        dic_datos["fecha"].append(titulo)
+        dic_datos["precio"].append(df_diario[["precio"]].mean()[0])
+
+    return pd.DataFrame.from_dict(dic_datos)
+
+
 
 
 if __name__ == "__main__":
     import doctest
+    compute_daily_prices()
+
 
     doctest.testmod()
