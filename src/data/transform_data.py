@@ -80,7 +80,7 @@ def transformar_df(df):
 
     for fecha in arreglo_fechas:
 
-        serie_fecha = { "valor" : df_transpuesta[fecha] }
+        serie_fecha = { "precio" : df_transpuesta[fecha] }
 
         df_fecha = pd.DataFrame(serie_fecha)
         df_fecha["fecha"] = fecha
@@ -89,7 +89,7 @@ def transformar_df(df):
 
     df_completo = pd.concat(arreglo_df,sort=False)
     df_completo['hora'] = df_completo.index
-    df_completo = df_completo[['fecha','hora','valor']]
+    df_completo = df_completo[['fecha','hora','precio']]
 
     df_completo['hora'] = df_completo.apply(lambda row : set_hora(row['hora']),axis=1)
 
