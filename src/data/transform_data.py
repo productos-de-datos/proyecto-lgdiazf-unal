@@ -30,30 +30,36 @@ def transform_data():
     """
 
     for file in list_files:
-        nombre = file.split(".")[0] 
-        try :
-            df_energia = pd.read_excel(path_landing + file,engine='openpyxl')
-        except :
-            df_energia = pd.read_excel(path_landing + file )
-        df_energia_filtrado = df_energia.dropna(thresh=23)
+        # nombre = file.split(".")[0] 
+        # try :
+        #     df_energia = pd.read_excel(path_landing + file,engine='openpyxl')
+        # except :
+        #     df_energia = pd.read_excel(path_landing + file )
+        # df_energia_filtrado = df_energia.dropna(thresh=23)
 
-        if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
-            df_arreglo = df_energia_filtrado.copy()
-            header = df_arreglo.iloc[0].apply(set_columnas)
-            df_energia_filtrado = df_arreglo.rename(columns = header)
-            df_energia_filtrado = df_energia_filtrado.iloc[1: , :]
+        # if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
+        #     df_arreglo = df_energia_filtrado.copy()
+        #     header = df_arreglo.iloc[0].apply(set_columnas)
+        #     df_energia_filtrado = df_arreglo.rename(columns = header)
+        #     df_energia_filtrado = df_energia_filtrado.iloc[1: , :]
 
-        esquema = ["Fecha"] + [str(int(hora)) for hora in range(24)]
-        df_energia_filtrado = df_energia_filtrado[esquema]
+        # esquema = ["Fecha"] + [str(int(hora)) for hora in range(24)]
+        # df_energia_filtrado = df_energia_filtrado[esquema]
 
-        df_energia_filtrado.index = df_energia_filtrado[list(df_energia_filtrado.columns.values)[0]]
+        # df_energia_filtrado.index = df_energia_filtrado[list(df_energia_filtrado.columns.values)[0]]
 
-        df_energia_filtrado = df_energia_filtrado.drop_duplicates( subset = list(df_energia_filtrado.columns.values)[0], keep='first',inplace=False)
+        # df_energia_filtrado = df_energia_filtrado.drop_duplicates( subset = list(df_energia_filtrado.columns.values)[0], keep='first',inplace=False)
 
-        df_transformado = transformar_df(df_energia_filtrado)
+        # df_transformado = transformar_df(df_energia_filtrado)
 
-        
-        df_transformado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
+        df_transformado = get_df(file)
+        guardar_df(file,path_raw,df_transformado)
+        # nombre = file.split(".")[0] 
+        # df_transformado.to_csv(path_raw + nombre + '.csv',index=False,header=True)
+
+
+
+    return True
         
 
 
@@ -67,6 +73,37 @@ def transform_data():
         
 
     #raise NotImplementedError("Implementar esta función")
+
+def guardar_df(file,path_raw,df):
+    nombre = file.split(".")[0] 
+    path = path_raw + nombre + '.csv'
+    df.to_csv(path,index=False,header=True)
+    return path
+
+
+def get_df(file):
+    try :
+        df_energia = pd.read_excel(path_landing + file,engine='openpyxl')
+    except :
+        df_energia = pd.read_excel(path_landing + file )
+    df_energia_filtrado = df_energia.dropna(thresh=23)
+
+    if list(df_energia_filtrado.columns.values)[0].upper() != "FECHA":
+        df_arreglo = df_energia_filtrado.copy()
+        header = df_arreglo.iloc[0].apply(set_columnas)
+        df_energia_filtrado = df_arreglo.rename(columns = header)
+        df_energia_filtrado = df_energia_filtrado.iloc[1: , :]
+
+    esquema = ["Fecha"] + [str(int(hora)) for hora in range(24)]
+    df_energia_filtrado = df_energia_filtrado[esquema]
+
+    df_energia_filtrado.index = df_energia_filtrado[list(df_energia_filtrado.columns.values)[0]]
+
+    df_energia_filtrado = df_energia_filtrado.drop_duplicates( subset = list(df_energia_filtrado.columns.values)[0], keep='first',inplace=False)
+
+    df_transformado = transformar_df(df_energia_filtrado)
+    return df_transformado
+
 
 
 def transformar_df(df):

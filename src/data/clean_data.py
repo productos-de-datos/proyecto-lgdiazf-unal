@@ -29,10 +29,17 @@ def clean_data():
     list_archivos = get_lista_archivos()
     df_completo = get_df_completo(list_archivos)
     df_formateado = formatear_df(df_completo)
+    guardar_df(path_cleansed + "precios-horarios.csv",df_formateado)
 
-    df_formateado.to_csv(path_cleansed + "precios-horarios.csv" ,index=False,header=True)
+
+    #df_formateado.to_csv(path_cleansed + "precios-horarios.csv" ,index=False,header=True)
 
     #raise NotImplementedError("Implementar esta función")
+
+
+def guardar_df(path,df):
+    df.to_csv(path ,index=False,header=True)
+
 
 
 def get_lista_archivos():

@@ -10,14 +10,9 @@ import os
 from pathlib import Path
 
 
-url_tree_repo = "https://api.github.com/repos/jdvelasq/datalabs/git/trees/master"
 url_path_raw = 'https://raw.githubusercontent.com/jdvelasq/datalabs/master/datasets/precio_bolsa_nacional/xls/'
+url_tree_repo = "https://api.github.com/repos/jdvelasq/datalabs/git/trees/master"
 cwd=os.getcwd()
-
-
-data_tree_repo : json  = requests.get(url_tree_repo).json()['tree']
-
-
 
 def get_tree_sha(files:json,folder:str):
     path : str= ""
@@ -26,14 +21,18 @@ def get_tree_sha(files:json,folder:str):
             path = file["url"]
     return path
 
-root = get_tree_sha(data_tree_repo,'datasets')
-resp = requests.get(root)
+def get_file_list():
+    data_tree_repo : json  = requests.get(url_tree_repo).json()['tree']
+    root = get_tree_sha(data_tree_repo,'datasets')
+    resp = requests.get(root)
 
-subfolder = get_tree_sha(resp.json()['tree'],'precio_bolsa_nacional')
-resp = requests.get(subfolder)
+    subfolder = get_tree_sha(resp.json()['tree'],'precio_bolsa_nacional')
+    resp = requests.get(subfolder)
 
-data_path =  get_tree_sha(resp.json()['tree'],'xls')
-resp = requests.get(data_path)
+    data_path =  get_tree_sha(resp.json()['tree'],'xls')
+    resp = requests.get(data_path)
+
+    return resp.json()['tree']
 
 
 def guardar_data(url:str,path:str):
@@ -50,7 +49,7 @@ def ingest_data():
     descarga debe realizarse usando únicamente funciones de Python.
 
     """
-    for archivo in  resp.json()['tree']:
+    for archivo in  get_file_list():
         url = url_path_raw  + str(archivo["path"])
         path = os.path.join(cwd,"data_lake/landing/" + str(archivo['path']))
         guardar_data(url,path)

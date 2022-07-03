@@ -22,14 +22,19 @@ def compute_daily_prices():
     """
     df_datos = pd.read_csv(path_datos)
     df_promedio_diario = get_datos(df_datos) 
+    guardar_df(path_datos_computados,df_promedio_diario)
 
-    df_promedio_diario.to_csv(path_datos_computados ,index=False,header=True)
+    # df_promedio_diario.to_csv(path_datos_computados ,index=False,header=True)
 
 
     
 
 
    # raise NotImplementedError("Implementar esta función")
+
+
+def guardar_df(path,df):
+    df.to_csv(path ,index=False,header=True)
 
 
 def get_datos(df_datos):
