@@ -23,6 +23,7 @@ def create_data_lake():
               |___ forecasts/
 
     ```
+    >>> create_data_lake()
     """
     for path_carpeta in esquema_data_lake.get_esquema():
         try:
@@ -39,4 +40,4 @@ if __name__ == "__main__":
     import doctest
     
     doctest.testmod()
-    create_data_lake()
+    #create_data_lake()
