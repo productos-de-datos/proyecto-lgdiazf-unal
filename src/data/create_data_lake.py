@@ -22,8 +22,6 @@ def create_data_lake():
               |___ features/
               |___ forecasts/
 
-    
-
     ```
     """
     for path_carpeta in esquema_data_lake.get_esquema():
@@ -33,10 +31,12 @@ def create_data_lake():
                 os.mkdir(path_absoluto)
         except :
             raise Exception("no se pudo crear la carpeta")
-    
+
+
 
 
 if __name__ == "__main__":
     import doctest
-
+    
     doctest.testmod()
+    create_data_lake()
