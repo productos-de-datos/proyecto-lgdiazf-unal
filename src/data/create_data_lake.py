@@ -3,7 +3,7 @@ import esquema_data_lake
 
 
 
-def create_data_lake(path=os.getcwd()):
+def create_data_lake():
     """Cree el data lake con sus capas.
 
     Esta función debe crear la carpeta `data_lake` en la raiz del proyecto. El data lake contiene
@@ -22,17 +22,17 @@ def create_data_lake(path=os.getcwd()):
               |___ features/
               |___ forecasts/
 
+    
+
     ```
-
-
     """
     for path_carpeta in esquema_data_lake.get_esquema():
         try:
             if not os.path.exists(path_carpeta):
-                os.mkdir(path_carpeta)
+                path_absoluto = os.path.join(os.getcwd(),path_carpeta)
+                os.mkdir(path_absoluto)
         except :
             raise Exception("no se pudo crear la carpeta")
-    return path
     
 
 
