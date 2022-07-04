@@ -23,6 +23,7 @@ def create_data_lake():
               |___ forecasts/
 
     ```
+    Para crear crear las carpetas que componen el datalake se debe ejecutar : 
     >>> create_data_lake()
     """
     for path_carpeta in esquema_data_lake.get_esquema():
@@ -33,11 +34,6 @@ def create_data_lake():
         except :
             raise Exception("no se pudo crear la carpeta")
 
-
-
-
 if __name__ == "__main__":
     import doctest
-    
     doctest.testmod()
-    #create_data_lake()
