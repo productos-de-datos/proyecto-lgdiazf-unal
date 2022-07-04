@@ -122,7 +122,7 @@
     },
     {
       "name": "Test 13",
-      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
+      "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint openpyxl",
       "run": "pylint",
       "input": "",
       "output": "",
