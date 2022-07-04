@@ -5,7 +5,7 @@ import os
 cwd = os.getcwd()
 
 path_archivo = os.path.join(cwd, "data_lake/business/precios-mensuales.csv")
-path_imagen =  os.path.join(cwd, "data_lake/business/reports/figures/daily_prices.png") 
+path_imagen =  os.path.join(cwd, "data_lake/business/reports/figures/monthly_prices.png") 
 
 
 
