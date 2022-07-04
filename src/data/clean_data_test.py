@@ -6,7 +6,7 @@ import transform_data
 
 path_archivo = "data_lake/cleansed/precios-horarios.csv"
 
-class TestIngrestData:
+class TestCleanData:
 
     def test_clean_data(self):
 
