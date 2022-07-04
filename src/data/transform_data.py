@@ -92,7 +92,7 @@ def transform_df(df,horas=24):
     5      2  H02      1
     """
     df_transformado = pd.melt(df,id_vars=['Fecha'],value_vars=[str(fecha) for fecha in range(horas)])
-    df_transformado = df_transformado.rename(columns={"Fecha" : "fecha" , "variable":"hora","value":"valor"})
+    df_transformado = df_transformado.rename(columns={"Fecha" : "fecha" , "variable":"hora","value":"precio"})
     df_transformado['hora'] = df_transformado.apply(lambda row : set_hora(row['hora']),axis=1)
 
     return df_transformado
