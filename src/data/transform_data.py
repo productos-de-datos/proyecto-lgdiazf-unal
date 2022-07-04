@@ -83,7 +83,7 @@ def transform_df(df,horas=24):
     >>> data = {'Fecha':[1,2],'0':[2,2],'1':[3,3],'2':[5,1]}
     >>> df = pd.DataFrame(data=data)
     >>> transform_df(df,3)
-       fecha hora  valor
+       fecha hora precio
     0      1  H00      2
     1      2  H00      2
     2      1  H01      3
@@ -145,12 +145,17 @@ def transform_data():
 
     """
 
-    list_files = os.listdir(path_landing)
-    for file in list_files:
-        df_energia = load_df(file)
-        df_esquema = set_esquema(df_energia)
-        df_transformado = transform_df(df_esquema)
-        guardar_df(file,path_raw,df_transformado)
+    try :
+
+        list_files = os.listdir(path_landing)
+        for file in list_files:
+            df_energia = load_df(file)
+            df_esquema = set_esquema(df_energia)
+            df_transformado = transform_df(df_esquema)
+            guardar_df(file,path_raw,df_transformado)
+    except :
+        raise Exception("error al transformar los datos")
+
 
 
 

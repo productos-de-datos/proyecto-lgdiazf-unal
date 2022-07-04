@@ -67,10 +67,13 @@ def ingest_data():
     descarga debe realizarse usando únicamente funciones de Python.
 
     """
-    for archivo in  get_file_list():
-        url = url_path_raw  + str(archivo["path"])
-        path = os.path.join(cwd,"data_lake/landing/" + str(archivo['path']))
-        guardar_data(url,path)
+    try :
+        for archivo in  get_file_list():
+            url = url_path_raw  + str(archivo["path"])
+            path = os.path.join(cwd,"data_lake/landing/" + str(archivo['path']))
+            guardar_data(url,path)
+    except :
+        raise Exception("error en la ingesta de los datos")
 
 if __name__ == "__main__":
     import doctest
