@@ -83,13 +83,13 @@ def transform_df(df,horas=24):
     >>> data = {'Fecha':[1,2],'0':[2,2],'1':[3,3],'2':[5,1]}
     >>> df = pd.DataFrame(data=data)
     >>> transform_df(df,3)
-       fecha hora precio
-    0      1  H00      2
-    1      2  H00      2
-    2      1  H01      3
-    3      2  H01      3
-    4      1  H02      5
-    5      2  H02      1
+       fecha hora  precio
+    0      1  H00       2
+    1      2  H00       2
+    2      1  H01       3
+    3      2  H01       3
+    4      1  H02       5
+    5      2  H02       1
     """
     df_transformado = pd.melt(df,id_vars=['Fecha'],value_vars=[str(fecha) for fecha in range(horas)])
     df_transformado = df_transformado.rename(columns={"Fecha" : "fecha" , "variable":"hora","value":"precio"})
