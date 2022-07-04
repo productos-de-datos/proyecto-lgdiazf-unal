@@ -5,8 +5,10 @@ import os
 cwd = os.getcwd()
 
 path_archivo = os.path.join(cwd, "data_lake/business/precios-diarios.csv")
-path_imagen =  os.path.join(cwd,"data_lake/business/reports/figures/daily_prices.png") 
+path_imagen =  os.path.join("data_lake/business/reports/figures/daily_prices.png") 
 
+
+data_lake/business/reports/figures/daily_prices.png
 def make_daily_prices_plot():
     """Crea un grafico de lines que representa los precios promedios diarios.
 
