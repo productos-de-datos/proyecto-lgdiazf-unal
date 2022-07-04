@@ -4,7 +4,7 @@ import os
 
 cwd = os.getcwd()
 
-path_archivo = "../data_lake/business/precios-diarios.csv"
+path_archivo = os.path.join(cwd, "data_lake/business/precios-diarios.csv")
 path_imagen =  os.path.join(cwd,"data_lake/business/reports/figures/daily_prices.png") 
 
 def make_daily_prices_plot():
