@@ -131,3 +131,8 @@ dmypy.json
 
 #vscode
 .vscode
+
+data_lake
+*.output
+
+notebooks/imagenes
