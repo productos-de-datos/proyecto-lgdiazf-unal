@@ -8,7 +8,7 @@ cwd=os.getcwd()
 
 path_raw = os.path.join(cwd, 'data_lake/raw/') 
 path_cleansed = os.path.join(cwd, 'data_lake/cleansed/') 
-list_files = os.listdir(path_raw)
+
 
 
 def clean_data():
@@ -45,6 +45,8 @@ def guardar_df(path,df):
 def get_lista_archivos():
 
     lista = []
+    list_files = os.listdir(path_raw)
+
 
     for archivo in list_files:
         year = int(archivo.split(".")[0])
