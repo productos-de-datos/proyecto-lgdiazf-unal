@@ -17,12 +17,15 @@ def make_daily_prices_plot():
     El archivo se debe salvar en formato PNG en data_lake/business/reports/figures/daily_prices.png.
 
     """
+    try :
 
     # raise NotImplementedError("Implementar esta función")
 
-    df = pd.read_csv(path_archivo)
-    df.plot.line(x="fecha", y="precio")
-    plt.savefig(path_imagen)
+        df = pd.read_csv(path_archivo)
+        df.plot.line(x="fecha", y="precio")
+        plt.savefig(path_imagen)
+    except :
+        return False
 
 
 if __name__ == "__main__":
