@@ -2,10 +2,12 @@ import pandas as pd
 import os
 from sklearn.neural_network import MLPRegressor
 import numpy as np
+import pickle
 
 cwd = os.getcwd()
 
 path_archivo = os.path.join(cwd,"data_lake/business/features/precios_diarios.csv")
+path_salida = os.path.join(cwd,"src/models/precios-diarios.pkl")
 
 
 def train_daily_model():
@@ -16,11 +18,12 @@ def train_daily_model():
 
 
     """
-    data = leer_data()
-    print(data)
+    data = leer_datos()
+    entrenar(data[0],data[1])
+    #print(data)
     #raise NotImplementedError("Implementar esta función")
 
-def entrenar(datos):
+def entrenar(X, observed_scaled):
     np.random.seed(123456)
 
     H = 1  # Se escoge arbitrariamente
@@ -37,11 +40,17 @@ def entrenar(datos):
     # Entrenamiento
     mlp.fit(X[0:215], observed_scaled[0:215])  # 239 - 24 = 215
 
+    pickle.dump( mlp , open( path_salida , 'wb' ) )
 
-def leer_data():
+
+
+
+def leer_datos():
     datos = pd.read_csv(path_archivo)
-    
-    return list(datos["variables"])[:-13]
+    return (
+        datos[[ str(i) for i in range(13)]].to_numpy(),
+        datos["precio_transformado"].to_numpy()
+        )
 
 
 if __name__ == "__main__":
