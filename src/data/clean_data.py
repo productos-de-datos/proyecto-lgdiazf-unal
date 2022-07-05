@@ -2,7 +2,6 @@
 modulo para limpiar datos
 """
 import doctest
-from msilib.schema import Error
 import os
 import pandas as pd
 
