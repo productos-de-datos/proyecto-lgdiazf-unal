@@ -1,5 +1,10 @@
-import pandas as pd
+"""
+modulo para calcular el promedio diario
+"""
+import doctest
 import os
+import pandas as pd
+
 
 cwd = os.getcwd()
 
@@ -17,15 +22,13 @@ def compute_daily_prices():
     * fecha: fecha en formato YYYY-MM-DD
 
     * precio: precio promedio diario de la electricidad en la bolsa nacional
-
-
-
     """
     try :
         df_datos = pd.read_csv(path_datos)
         df_promedio_diario = get_datos(df_datos)
         guardar_df(path_datos_computados, df_promedio_diario)
-    except :
+        return True
+    except  FileNotFoundError  :
         return False
 
     # df_promedio_diario.to_csv(path_datos_computados ,index=False,header=True)
@@ -34,11 +37,17 @@ def compute_daily_prices():
 # raise NotImplementedError("Implementar esta función")
 
 
-def guardar_df(path, df):
-    df.to_csv(path, index=False, header=True)
+def guardar_df(path, df_guardar):
+    """
+    Funcion para guardar el DF
+    """
+    df_guardar.to_csv(path, index=False, header=True)
 
 
 def get_datos(df_datos):
+    """
+    funcion para leer el DF y calcular el precio medio
+    """
 
     dic_datos = {"fecha": [], "precio": []}
 
@@ -51,10 +60,6 @@ def get_datos(df_datos):
 
     return pd.DataFrame.from_dict(dic_datos)
 
-
 if __name__ == "__main__":
-    import doctest
-
     compute_daily_prices()
-
     doctest.testmod()

@@ -1,6 +1,8 @@
-import pandas as pd
-
+"""
+modulo para calcular los promedios mensuales
+"""
 import os
+import pandas as pd
 
 cwd = os.getcwd()
 
@@ -29,7 +31,8 @@ def compute_monthly_prices():
 
         df_formateado = format_df(df_datos)
         guardar_df(df_formateado, path_datos_computados)
-    except:
+        return True
+    except  FileNotFoundError  :
         return False
 
 
@@ -39,6 +42,9 @@ def compute_monthly_prices():
 
 
 def format_df(df_datos):
+    """
+    Funcion para darle formato al DF
+    """
     df_datos[["fecha"]] = df_datos[["fecha"]].apply(pd.to_datetime)
     df_datos.index = df_datos["fecha"]
     grupo_df_datos = df_datos.groupby(pd.Grouper(freq="M"))
@@ -47,8 +53,11 @@ def format_df(df_datos):
     return df_consolidado
 
 
-def guardar_df(df, path):
-    df.to_csv(path, index=True, header=True)
+def guardar_df(df_guardar, path):
+    """
+    Funcion para guardar el DF
+    """
+    df_guardar.to_csv(path, index=True, header=True)
 
 
 if __name__ == "__main__":
