@@ -4,7 +4,7 @@ import pandas as pd
 cwd = os.getcwd()
 
 path_datos = os.path.join(cwd,"data_lake/business/precios-diarios.csv")
-path_salida = os.path.join(cwd,"data_lake/business/features/precios-diarios.csv")
+path_salida = os.path.join(cwd,"data_lake/business/features/precios_diarios.csv")
 
 def make_features():
     """Prepara datos para pronóstico.
@@ -28,7 +28,7 @@ def make_features():
 
     df_completo = df.join(df_variables_explicativas)
 
-    df_completo.to_csv(path_salida)
+    df_completo.to_csv(path_salida,index=False,header=True)
 
 
 
