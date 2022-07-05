@@ -6,8 +6,8 @@ import pickle
 
 cwd = os.getcwd()
 
-path_archivo = os.path.join(cwd,"data_lake/business/features/precios_diarios.csv")
-path_salida = os.path.join(cwd,"src/models/precios-diarios.pkl")
+path_archivo = os.path.join(cwd, "data_lake/business/features/precios_diarios.csv")
+path_salida = os.path.join(cwd, "src/models/precios-diarios.pkl")
 
 
 def train_daily_model():
@@ -18,10 +18,14 @@ def train_daily_model():
 
 
     """
-    data = leer_datos()
-    entrenar(data[0],data[1])
-    #print(data)
-    #raise NotImplementedError("Implementar esta función")
+    try :
+        data = leer_datos()
+        entrenar(data[0], data[1])
+        # print(data)
+        # raise NotImplementedError("Implementar esta función")
+    except :
+        return False
+
 
 def entrenar(X, observed_scaled):
     np.random.seed(123456)
@@ -40,17 +44,15 @@ def entrenar(X, observed_scaled):
     # Entrenamiento
     mlp.fit(X[0:215], observed_scaled[0:215])  # 239 - 24 = 215
 
-    pickle.dump( mlp , open( path_salida , 'wb' ) )
-
-
+    pickle.dump(mlp, open(path_salida, "wb"))
 
 
 def leer_datos():
     datos = pd.read_csv(path_archivo)
     return (
-        datos[[ str(i) for i in range(13)]].to_numpy(),
-        datos["precio_transformado"].to_numpy()
-        )
+        datos[[str(i) for i in range(13)]].to_numpy(),
+        datos["precio_transformado"].to_numpy(),
+    )
 
 
 if __name__ == "__main__":

@@ -1,10 +1,9 @@
-
 import os
 import create_data_lake as create_data_lake
 import esquema_data_lake as esquema
 
-class TestCreateDataLake:
 
+class TestCreateDataLake:
     def test_crear_data_lake(self):
         os.system("rm -rf data_lake")
 

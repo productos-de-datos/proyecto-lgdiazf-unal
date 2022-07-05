@@ -4,6 +4,7 @@ import esquema_data_csv as esquema
 import create_data_lake
 import ingest_data
 
+
 class TestTransformData:
     def test_transform_data(self):
         os.system("rm -rf data_lake")

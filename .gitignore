@@ -136,3 +136,5 @@ data_lake
 *.output
 
 notebooks/imagenes
+
+*.pkl

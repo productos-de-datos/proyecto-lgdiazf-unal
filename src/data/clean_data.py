@@ -1,20 +1,23 @@
+"""
+modulo para limpiar datos
+"""
+import doctest
 import os
 import pandas as pd
 
-cwd=os.getcwd()
+
+cwd = os.getcwd()
 
 
-
-
-path_raw = os.path.join(cwd, 'data_lake/raw/') 
-path_cleansed = os.path.join(cwd, 'data_lake/cleansed/') 
-
+path_raw = os.path.join(cwd, "data_lake/raw/")
+path_cleansed = os.path.join(cwd, "data_lake/cleansed/")
 
 
 def clean_data():
     """Realice la limpieza y transformación de los archivos CSV.
 
-    Usando los archivos data_lake/raw/*.csv, cree el archivo data_lake/cleansed/precios-horarios.csv.
+    Usando los archivos data_lake/raw/*.csv, cree el archivo
+    data_lake/cleansed/precios-horarios.csv.
     Las columnas de este archivo son:
 
     * fecha: fecha en formato YYYY-MM-DD
@@ -25,64 +28,72 @@ def clean_data():
 
 
     """
+    try :
 
-    list_archivos = get_lista_archivos()
-    df_completo = get_df_completo(list_archivos)
-    df_formateado = formatear_df(df_completo)
-    guardar_df(path_cleansed + "precios-horarios.csv",df_formateado)
-
-
-    #df_formateado.to_csv(path_cleansed + "precios-horarios.csv" ,index=False,header=True)
-
-    #raise NotImplementedError("Implementar esta función")
+        list_archivos = get_lista_archivos()
+        df_completo = get_df_completo(list_archivos)
+        df_formateado = formatear_df(df_completo)
+        guardar_df(path_cleansed + "precios-horarios.csv", df_formateado)
+    except Exception as error :
+        return False
 
 
-def guardar_df(path,df):
-    df.to_csv(path ,index=False,header=True)
-
+def guardar_df(path, df_guardar):
+    """
+    funcion para guardar df
+    """
+    df_guardar.to_csv(path, index=False, header=True)
 
 
 def get_lista_archivos():
-
+    """
+    funcion para listar los archivos
+    """
     lista = []
     list_files = os.listdir(path_raw)
 
-
     for archivo in list_files:
         year = int(archivo.split(".")[0])
-        if year >= 1997 and year <= 2021 :
-            lista.append(path_raw +  archivo)
+        if 1997 <= year <= 2021:
+            lista.append(path_raw + archivo)
 
     return lista
 
+
 def get_df_completo(lista_archivos):
+    """
+    funcion que concatena los df
+    """
 
     arreglo_df = []
 
     for archivo in lista_archivos:
         arreglo_df.append(pd.read_csv(archivo))
 
-    df_completo = pd.concat(arreglo_df,sort=False)
-    
+    df_completo = pd.concat(arreglo_df, sort=False)
+
     return df_completo
 
 
 def set_hora(hora):
-    return (hora[1:])
+    """
+    funcion que elimina la H de la hora
+    """
+    return hora[1:]
+
 
 def formatear_df(df_completo):
+    """
+    funcion para cambiar la hora en todo el df
+    """
     df_arreglo = df_completo.copy()
-    df_arreglo["hora"] = df_arreglo.apply(lambda row : set_hora(row['hora']),axis=1)
-
-
+    df_arreglo["hora"] = df_arreglo.apply(lambda row: set_hora(row["hora"]), axis=1)
 
     return df_arreglo
 
 
 if __name__ == "__main__":
-    import doctest
+
 
     doctest.testmod()
     clean_data()
-
-   

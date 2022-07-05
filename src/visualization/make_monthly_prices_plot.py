@@ -5,8 +5,7 @@ import os
 cwd = os.getcwd()
 
 path_archivo = os.path.join(cwd, "data_lake/business/precios-mensuales.csv")
-path_imagen =  os.path.join(cwd, "data_lake/business/reports/figures/monthly_prices.png") 
-
+path_imagen = os.path.join(cwd, "data_lake/business/reports/figures/monthly_prices.png")
 
 
 def make_daily_prices_plot():
@@ -19,15 +18,15 @@ def make_daily_prices_plot():
 
     """
 
+    # raise NotImplementedError("Implementar esta función")
 
-    #raise NotImplementedError("Implementar esta función")
-    
     df = pd.read_csv(path_archivo)
-    df.plot.line(x="fecha",y="precio")
+    df.plot.line(x="fecha", y="precio")
     plt.savefig(path_imagen)
 
 
 if __name__ == "__main__":
     import doctest
+
     make_daily_prices_plot()
     doctest.testmod()
