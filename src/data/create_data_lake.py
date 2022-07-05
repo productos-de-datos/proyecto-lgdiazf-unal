@@ -2,7 +2,7 @@
 Modulo para crear el datalake
 """
 import os
-import esquema_data_lake
+from data import esquema_data_lake
 
 
 def create_data_lake():

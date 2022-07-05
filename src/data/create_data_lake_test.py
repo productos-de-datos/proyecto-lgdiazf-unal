@@ -1,14 +1,21 @@
+"""
+Modulo para test de la funcion create
+datalake
+"""
 import os
-import create_data_lake as create_data_lake
-import esquema_data_lake as esquema
+from data import  create_data_lake
+from data import esquema_data_lake as esquema
 
 
-class TestCreateDataLake:
-    def test_crear_data_lake(self):
-        os.system("rm -rf data_lake")
 
-        create_data_lake.create_data_lake()
-        for path_carpeta in esquema.esquema:
-            assert os.path.exists(path_carpeta) is True
+def test_crear_data_lake():
+    """
+    asegura la creacion del datalake
+    """
+    os.system("rm -rf data_lake")
 
-        os.system("rm -rf data_lake")
+    create_data_lake.create_data_lake()
+    for path_carpeta in esquema.esquema:
+        assert os.path.exists(path_carpeta) is True
+
+    os.system("rm -rf data_lake")
