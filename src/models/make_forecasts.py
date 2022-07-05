@@ -8,10 +8,11 @@ from sklearn.preprocessing import MinMaxScaler
 
 cwd = os.getcwd()
 
-path_datos = os.path.join(cwd,"data_lake/business/precios-diarios.csv")
-path_archivo = os.path.join(cwd,"data_lake/business/features/precios_diarios.csv")
-path_modelo = os.path.join(cwd,"src/models/precios-diarios.pkl")
-path_salida = os.path.join(cwd,"data_lake/business/forecasts/precios-diarios.csv")
+path_datos = os.path.join(cwd, "data_lake/business/precios-diarios.csv")
+path_archivo = os.path.join(cwd, "data_lake/business/features/precios_diarios.csv")
+path_modelo = os.path.join(cwd, "src/models/precios-diarios.pkl")
+path_salida = os.path.join(cwd, "data_lake/business/forecasts/precios-diarios.csv")
+
 
 def make_forecasts():
     """Construya los pronosticos con el modelo entrenado final.
@@ -32,26 +33,29 @@ def make_forecasts():
     modelo = load_model()
 
     y_scaled_m1 = modelo.predict(data[0])
-    df_y_m1 = pd.DataFrame(get_precio_transformado(y_scaled_m1)).rename(columns={0:"pronostico"})
+    df_y_m1 = pd.DataFrame(get_precio_transformado(y_scaled_m1)).rename(
+        columns={0: "pronostico"}
+    )
     df_z = get_datos_reales()
 
-    df_completo = df_y_m1.join(df_z)[["fecha","precio","pronostico"]]
+    df_completo = df_y_m1.join(df_z)[["fecha", "precio", "pronostico"]]
 
-    df_completo.to_csv(path_salida,index=False,header=True)
+    df_completo.to_csv(path_salida, index=False, header=True)
 
-    #raise NotImplementedError("Implementar esta función")
+    # raise NotImplementedError("Implementar esta función")
 
 
 def leer_datos():
     datos = pd.read_csv(path_archivo)
     return (
-        datos[[ str(i) for i in range(13)]].to_numpy(),
-        datos["precio_transformado"].to_numpy()
-        )
+        datos[[str(i) for i in range(13)]].to_numpy(),
+        datos["precio_transformado"].to_numpy(),
+    )
+
 
 def load_model():
 
-    modelo = pickle.load( open( path_modelo , 'rb' ))
+    modelo = pickle.load(open(path_modelo, "rb"))
 
     return modelo
 
@@ -75,9 +79,10 @@ def get_precio_transformado(y_scaled_m1):
 
     return y_m1
 
+
 def get_datos_reales():
     df = pd.read_csv(path_datos)
-    return df[["fecha","precio"]]
+    return df[["fecha", "precio"]]
 
 
 if __name__ == "__main__":

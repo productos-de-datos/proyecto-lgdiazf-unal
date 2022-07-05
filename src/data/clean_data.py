@@ -1,14 +1,11 @@
 import os
 import pandas as pd
 
-cwd=os.getcwd()
+cwd = os.getcwd()
 
 
-
-
-path_raw = os.path.join(cwd, 'data_lake/raw/') 
-path_cleansed = os.path.join(cwd, 'data_lake/cleansed/') 
-
+path_raw = os.path.join(cwd, "data_lake/raw/")
+path_cleansed = os.path.join(cwd, "data_lake/cleansed/")
 
 
 def clean_data():
@@ -29,17 +26,15 @@ def clean_data():
     list_archivos = get_lista_archivos()
     df_completo = get_df_completo(list_archivos)
     df_formateado = formatear_df(df_completo)
-    guardar_df(path_cleansed + "precios-horarios.csv",df_formateado)
+    guardar_df(path_cleansed + "precios-horarios.csv", df_formateado)
+
+    # df_formateado.to_csv(path_cleansed + "precios-horarios.csv" ,index=False,header=True)
+
+    # raise NotImplementedError("Implementar esta función")
 
 
-    #df_formateado.to_csv(path_cleansed + "precios-horarios.csv" ,index=False,header=True)
-
-    #raise NotImplementedError("Implementar esta función")
-
-
-def guardar_df(path,df):
-    df.to_csv(path ,index=False,header=True)
-
+def guardar_df(path, df):
+    df.to_csv(path, index=False, header=True)
 
 
 def get_lista_archivos():
@@ -47,13 +42,13 @@ def get_lista_archivos():
     lista = []
     list_files = os.listdir(path_raw)
 
-
     for archivo in list_files:
         year = int(archivo.split(".")[0])
-        if year >= 1997 and year <= 2021 :
-            lista.append(path_raw +  archivo)
+        if year >= 1997 and year <= 2021:
+            lista.append(path_raw + archivo)
 
     return lista
+
 
 def get_df_completo(lista_archivos):
 
@@ -62,19 +57,18 @@ def get_df_completo(lista_archivos):
     for archivo in lista_archivos:
         arreglo_df.append(pd.read_csv(archivo))
 
-    df_completo = pd.concat(arreglo_df,sort=False)
-    
+    df_completo = pd.concat(arreglo_df, sort=False)
+
     return df_completo
 
 
 def set_hora(hora):
-    return (hora[1:])
+    return hora[1:]
+
 
 def formatear_df(df_completo):
     df_arreglo = df_completo.copy()
-    df_arreglo["hora"] = df_arreglo.apply(lambda row : set_hora(row['hora']),axis=1)
-
-
+    df_arreglo["hora"] = df_arreglo.apply(lambda row: set_hora(row["hora"]), axis=1)
 
     return df_arreglo
 
@@ -84,5 +78,3 @@ if __name__ == "__main__":
 
     doctest.testmod()
     clean_data()
-
-   

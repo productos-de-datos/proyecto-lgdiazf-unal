@@ -1,4 +1,3 @@
-
 esquema = [
     "data_lake",
     "data_lake/landing",
@@ -8,7 +7,7 @@ esquema = [
     "data_lake/business/reports",
     "data_lake/business/reports/figures",
     "data_lake/business/features",
-    "data_lake/business/forecasts"
+    "data_lake/business/forecasts",
 ]
 
 

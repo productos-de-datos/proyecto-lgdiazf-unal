@@ -1,4 +1,3 @@
-
 esquema = [
     "data_lake/landing/1995.xlsx",
     "data_lake/landing/1996.xlsx",
@@ -26,7 +25,7 @@ esquema = [
     "data_lake/landing/2018.xlsx",
     "data_lake/landing/2019.xlsx",
     "data_lake/landing/2020.xlsx",
-    "data_lake/landing/2021.xlsx"
+    "data_lake/landing/2021.xlsx",
 ]
 
 
