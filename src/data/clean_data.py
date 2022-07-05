@@ -2,6 +2,7 @@
 modulo para limpiar datos
 """
 import doctest
+from msilib.schema import Error
 import os
 import pandas as pd
 
@@ -28,11 +29,15 @@ def clean_data():
 
 
     """
+    try :
 
-    list_archivos = get_lista_archivos()
-    df_completo = get_df_completo(list_archivos)
-    df_formateado = formatear_df(df_completo)
-    guardar_df(path_cleansed + "precios-horarios.csv", df_formateado)
+        list_archivos = get_lista_archivos()
+        df_completo = get_df_completo(list_archivos)
+        df_formateado = formatear_df(df_completo)
+        guardar_df(path_cleansed + "precios-horarios.csv", df_formateado)
+    except :
+
+        raise Error("no fue posible ejecutar la funcion")
 
 
 def guardar_df(path, df_guardar):
