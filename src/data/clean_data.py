@@ -35,7 +35,6 @@ def clean_data():
         df_formateado = formatear_df(df_completo)
         guardar_df(path_cleansed + "precios-horarios.csv", df_formateado)
     except Exception as error :
-        raise Exception("no se pudo ejecutar la funcion") from error
         return False
 
 
@@ -78,7 +77,7 @@ def get_df_completo(lista_archivos):
 
 def set_hora(hora):
     """
-    funcion que elimina el H de la hora
+    funcion que elimina la H de la hora
     """
     return hora[1:]
 
