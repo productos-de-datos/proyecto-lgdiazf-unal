@@ -193,7 +193,7 @@
     {
       "name": "Test 20",
       "setup": "pip3 install matplotlib sklearn pandas luigi pytest pylint",
-      "run": "python3 pipeline.py",
+      "run": "python3 src/data/pipeline.py",
       "input": "",
       "output": "",
       "comparison": "included",
