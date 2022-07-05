@@ -36,6 +36,7 @@ def clean_data():
         guardar_df(path_cleansed + "precios-horarios.csv", df_formateado)
     except Exception as error :
         raise Exception("no se pudo ejecutar la funcion") from error
+        return False
 
 
 def guardar_df(path, df_guardar):
