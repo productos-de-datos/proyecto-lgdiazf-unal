@@ -2,7 +2,7 @@
 Modulo para crear el datalake
 """
 import os
-from data import esquema_data_lake
+import esquema_data_lake
 
 
 def create_data_lake():
@@ -27,6 +27,7 @@ def create_data_lake():
     ```
     Para crear crear las carpetas que componen el datalake se debe ejecutar :
     >>> create_data_lake()
+    True
     """
     for path_carpeta in esquema_data_lake.get_esquema():
         try:

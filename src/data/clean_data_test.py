@@ -2,12 +2,10 @@
 modulo para probar la funcion clean_data
 """
 import os
-from data import  clean_data
-from data import create_data_lake
-from data import ingest_data
-from data import transform_data
-
-
+import  clean_data
+import create_data_lake
+import ingest_data
+import transform_data
 PATH = "data_lake/cleansed/precios-horarios.csv"
 
 

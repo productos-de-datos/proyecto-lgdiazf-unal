@@ -3,8 +3,8 @@ Modulo para test de la funcion create
 datalake
 """
 import os
-from data import  create_data_lake
-from data import esquema_data_lake as esquema
+import  create_data_lake
+import esquema_data_lake as esquema
 
 
 

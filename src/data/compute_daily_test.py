@@ -3,12 +3,11 @@ Modulo para test de compute
 daily
 """
 import os
-from data import create_data_lake
-from data import ingest_data
-from data import transform_data
-from data import clean_data
-from data import compute_daily_prices
-
+import create_data_lake
+import ingest_data
+import transform_data
+import clean_data
+import compute_daily_prices
 cwd = os.getcwd()
 
 
