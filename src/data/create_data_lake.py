@@ -1,3 +1,6 @@
+"""
+Modulo para crear el datalake
+"""
 import os
 import esquema_data_lake
 
@@ -11,11 +14,11 @@ def create_data_lake():
     ```
     .
     |
-    \___ data_lake/
+    |___ data_lake/
          |___ landing/
          |___ raw/
          |___ cleansed/
-         \___ business/
+         |___ business/
               |___ reports/
               |    |___ figures/
               |___ features/
@@ -30,8 +33,9 @@ def create_data_lake():
             if not os.path.exists(path_carpeta):
                 path_absoluto = os.path.join(os.getcwd(), path_carpeta)
                 os.mkdir(path_absoluto)
-        except:
-            raise Exception("no se pudo crear la carpeta")
+            return True
+        except  FileNotFoundError  :
+            return False
 
 
 if __name__ == "__main__":
