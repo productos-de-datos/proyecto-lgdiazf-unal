@@ -162,7 +162,7 @@ def transform_data():
             df_transformado = transform_df(df_esquema)
             guardar_df(file, path_raw, df_transformado)
     except:
-        raise Exception("error al transformar los datos")
+        return False
 
         # nombre = file.split(".")[0]
         # try :

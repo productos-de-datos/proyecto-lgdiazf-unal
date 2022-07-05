@@ -28,22 +28,24 @@ def make_forecasts():
 
 
     """
+    try :
 
-    data = leer_datos()
-    modelo = load_model()
+        data = leer_datos()
+        modelo = load_model()
 
-    y_scaled_m1 = modelo.predict(data[0])
-    df_y_m1 = pd.DataFrame(get_precio_transformado(y_scaled_m1)).rename(
-        columns={0: "pronostico"}
-    )
-    df_z = get_datos_reales()
+        y_scaled_m1 = modelo.predict(data[0])
+        df_y_m1 = pd.DataFrame(get_precio_transformado(y_scaled_m1)).rename(
+            columns={0: "pronostico"}
+        )
+        df_z = get_datos_reales()
 
-    df_completo = df_y_m1.join(df_z)[["fecha", "precio", "pronostico"]]
+        df_completo = df_y_m1.join(df_z)[["fecha", "precio", "pronostico"]]
 
-    df_completo.to_csv(path_salida, index=False, header=True)
+        df_completo.to_csv(path_salida, index=False, header=True)
 
-    # raise NotImplementedError("Implementar esta función")
-
+        # raise NotImplementedError("Implementar esta función")
+    except:
+        return False
 
 def leer_datos():
     datos = pd.read_csv(path_archivo)

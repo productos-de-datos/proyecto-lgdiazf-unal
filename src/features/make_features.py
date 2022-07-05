@@ -22,30 +22,34 @@ def make_features():
 
     """
 
-    df = pd.read_csv(path_datos)
-    # df =  df.iloc[13: , :]
+    try :
 
-    # df_variables_explicativas = get_df_variables_explicativas(df,p=13)
+        df = pd.read_csv(path_datos)
+        # df =  df.iloc[13: , :]
 
-    # df_completo = df.join(df_variables_explicativas)
+        # df_variables_explicativas = get_df_variables_explicativas(df,p=13)
 
-    # df_completo.to_csv(path_salida,index=False,header=True)
+        # df_completo = df.join(df_variables_explicativas)
 
-    data = get_precios(df)
-    observed_scaled, X = get_precio_transformado(data)
+        # df_completo.to_csv(path_salida,index=False,header=True)
 
-    df1 = pd.DataFrame(X)
-    df2 = pd.DataFrame(observed_scaled).rename(columns={0: "precio_transformado"})
-    df3 = df.iloc[13:, :]["fecha"]
-    df3.index = [i for i in range(df3.shape[0])]
+        data = get_precios(df)
+        observed_scaled, X = get_precio_transformado(data)
 
-    df_completo = df1.join(df2).join(df3)
-    df_completo.to_csv(path_salida, index=False, header=True)
+        df1 = pd.DataFrame(X)
+        df2 = pd.DataFrame(observed_scaled).rename(columns={0: "precio_transformado"})
+        df3 = df.iloc[13:, :]["fecha"]
+        df3.index = [i for i in range(df3.shape[0])]
 
-    # print(pd.DataFrame(observed_scaled))
-    # print(df.shape)
+        df_completo = df1.join(df2).join(df3)
+        df_completo.to_csv(path_salida, index=False, header=True)
 
-    # raise NotImplementedError("Implementar esta función")
+        # print(pd.DataFrame(observed_scaled))
+        # print(df.shape)
+
+        # raise NotImplementedError("Implementar esta función")
+    except :
+        return False
 
 
 def get_precios(df):

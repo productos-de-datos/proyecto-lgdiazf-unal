@@ -18,10 +18,13 @@ def train_daily_model():
 
 
     """
-    data = leer_datos()
-    entrenar(data[0], data[1])
-    # print(data)
-    # raise NotImplementedError("Implementar esta función")
+    try :
+        data = leer_datos()
+        entrenar(data[0], data[1])
+        # print(data)
+        # raise NotImplementedError("Implementar esta función")
+    except :
+        return False
 
 
 def entrenar(X, observed_scaled):

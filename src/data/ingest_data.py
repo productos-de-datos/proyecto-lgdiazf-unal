@@ -72,7 +72,7 @@ def ingest_data():
             path = os.path.join(cwd, "data_lake/landing/" + str(archivo["path"]))
             guardar_data(url, path)
     except:
-        raise Exception("error en la ingesta de los datos")
+        return False
 
 
 if __name__ == "__main__":

@@ -21,9 +21,12 @@ def compute_daily_prices():
 
 
     """
-    df_datos = pd.read_csv(path_datos)
-    df_promedio_diario = get_datos(df_datos)
-    guardar_df(path_datos_computados, df_promedio_diario)
+    try :
+        df_datos = pd.read_csv(path_datos)
+        df_promedio_diario = get_datos(df_datos)
+        guardar_df(path_datos_computados, df_promedio_diario)
+    except :
+        return False
 
     # df_promedio_diario.to_csv(path_datos_computados ,index=False,header=True)
 

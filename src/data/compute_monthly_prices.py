@@ -18,18 +18,19 @@ def compute_monthly_prices():
     * fecha: fecha en formato YYYY-MM-DD
 
     * precio: precio promedio mensual de la electricidad en la bolsa nacional
-
-
-
     """
-    df_datos = pd.read_csv(path_datos)
-    # df_datos[["fecha"]] = df_datos[["fecha"]].apply(pd.to_datetime)
-    # df_datos.index = df_datos["fecha"]
-    # grupo_df_datos = df_datos.groupby(pd.Grouper(freq="M"))
-    # df_consolidado = grupo_df_datos['precio'].mean()
 
-    df_formateado = format_df(df_datos)
-    guardar_df(df_formateado, path_datos_computados)
+    try :
+        df_datos = pd.read_csv(path_datos)
+        # df_datos[["fecha"]] = df_datos[["fecha"]].apply(pd.to_datetime)
+        # df_datos.index = df_datos["fecha"]
+        # grupo_df_datos = df_datos.groupby(pd.Grouper(freq="M"))
+        # df_consolidado = grupo_df_datos['precio'].mean()
+
+        df_formateado = format_df(df_datos)
+        guardar_df(df_formateado, path_datos_computados)
+    except:
+        return False
 
 
 # df_consolidado.to_csv(path_datos_computados ,index=True,header=True)
